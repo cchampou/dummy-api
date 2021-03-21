@@ -1,0 +1,33 @@
+version: '3'
+
+networks:
+  sane-infra:
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./server:/var/www/sane
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - sane-infra
+
+  php:
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+    volumes:
+    - ./server:/var/www/sane
+    ports:
+      - "9000:9000"
+    networks:
+      - sane-infra
+  database:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: b8gt5k98c
+      POSTGRES_USER: admin
+    networks:
+      - sane-infra
