@@ -4,26 +4,33 @@ namespace App\Controller;
 
 use App\Entity\News;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class NewsController extends AbstractController
 {
     /**
      * @Route("/news", name="create_news", methods={"POST"})
+     * @param Request $request
+     * @param ValidatorInterface $validator
      * @return Response
      */
-    public function createNews(): Response
+    public function createNews(Request $request, ValidatorInterface $validator): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
 
         $news = new News();
-        $news->setMessage('Development has started');
+
+        $news->setMessage($request->request->get('message'));
+        $errors = $validator->validate($news);
+        if(count($errors) > 0) {
+            return new Response("BAD REQUEST", 400);
+        }
 
         $entityManager->persist($news);
-
         $entityManager->flush();
 
         return new Response('Saved new news with id '.$news->getId());
@@ -42,5 +49,19 @@ class NewsController extends AbstractController
             'json'
         );
         return new Response($json);
+    }
+
+    /**
+     * @Route("/news/{id}", name="delete_news", methods={"DELETE"})
+     * @param News $news
+     * @return Response
+     */
+    public function deleteNews(News $news): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($news);
+        $entityManager->flush();
+
+        return new Response('OK');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\NewsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -21,7 +22,7 @@ class News
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list_news"})
+     * @Assert\NotBlank
      */
     private $message;
 
@@ -35,7 +36,7 @@ class News
         return $this->message;
     }
 
-    public function setMessage(string $message): self
+    public function setMessage(?string $message): self
     {
         $this->message = $message;
 
