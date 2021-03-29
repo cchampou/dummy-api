@@ -39,7 +39,6 @@ class SecurityController extends AbstractController
           return new Response("BAD REQUEST", 400);
       }
 
-
       $entityManager->persist($user);
       $entityManager->flush();
 
@@ -47,4 +46,12 @@ class SecurityController extends AbstractController
         'message' => 'success'
       ]);
     }
+
+    /**
+    * @Route("/login", name="app_login", methods={"POST"})
+    */
+    public function login()
+    {
+    }
+
 }

@@ -15,4 +15,14 @@ class StatusController extends AbstractController {
     {
         return new Response("OK");
     }
+
+    /**
+     * @Route("/php", methods={"GET"})
+     * @return Response
+     */
+    public function php(): Response
+    {
+        phpinfo();
+        return new Response();
+    }
 }
