@@ -38,6 +38,21 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+    * @ORM\ManyToMany(targetEntity=Group::class, inversedBy="users")
+    * @ORM\JoinTable(name="users_groups")
+    */
+    private $groups;
+
+    public function __construct() {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function addGroup(Group $group)
+    {
+      $this->groups[] = $group;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +91,12 @@ class User implements UserInterface
 
         return array_unique($roles);
     }
+
+    public function getGroups()
+    {
+      return $this->groups;
+    }
+
 
     public function setRoles(array $roles): self
     {
