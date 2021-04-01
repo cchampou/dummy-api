@@ -16,6 +16,7 @@ services:
       - sane-infra
 
   php:
+    container_name: sane-php 
     build:
       context: .
       dockerfile: ./php/Dockerfile
