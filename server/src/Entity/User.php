@@ -51,6 +51,7 @@ class User implements UserInterface
     public function addGroup(Group $group)
     {
       $this->groups[] = $group;
+
     }
 
     public function getId(): ?int
@@ -86,7 +87,6 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -99,7 +99,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getGroups(): \Doctrine\Common\Collections\ArrayCollection
+    public function getGroups(): \Doctrine\ORM\PersistentCollection
     {
       return $this->groups;
     }

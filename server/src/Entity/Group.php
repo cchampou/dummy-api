@@ -35,10 +35,12 @@ class Group
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function addUser(User $user)
+    public function addUser(User $user): self
     {
         $user->addGroup($this);
         $this->users[] = $user;
+
+        return $this;
     }
 
     public function getId(): ?int
