@@ -14,8 +14,11 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        php:
+            pattern: ^/php$
+            security: false
         status:
-            pattern: ^/php
+            pattern: ^/status$
             security: false
         login:
             pattern: ^/login
