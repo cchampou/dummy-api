@@ -11,12 +11,12 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
-#        dev:
-#            pattern: ^/(_(profiler|wdt)|css|images|js)/
-#            security: false
-#        status:
-#            pattern: ^/php
-#            security: false
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        status:
+            pattern: ^/php
+            security: false
         login:
             pattern: ^/login
             stateless: true
@@ -32,10 +32,10 @@ security:
             pattern: ^/signup
             stateless: true
             anonymous: true
-#        public_domain:
-#            methods: [GET]
-#            pattern: ^/news
-#            anonymous: true
+        public_domain:
+            methods: [GET]
+            pattern: ^/news
+            anonymous: true
         main:
             pattern: ^/
             stateless: true
