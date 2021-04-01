@@ -24,8 +24,12 @@ class SecurityController extends AbstractController
     }
 
     /**
-    * @Route("/signup", name="app_signup", methods={"POST"})
-    */
+     * @Route("/signup", name="app_signup", methods={"POST"})
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return Response
+     */
     public function signup(Request $request, ValidatorInterface $validator, UserPasswordEncoderInterface $passwordEncoder): Response
     {
       $entityManager = $this->getDoctrine()->getManager();
@@ -48,8 +52,29 @@ class SecurityController extends AbstractController
     }
 
     /**
-    * @Route("/login", name="app_login", methods={"POST"})
-    */
+     * @Route("/promote", name="promote_user", methods={"PATCH"})
+     * @return Response
+     */
+    public function promoteUser(): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+        $user->promote();
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->json([
+            'message' => 'success'
+        ]);
+    }
+
+
+    /**
+     * Keep this route, it's handled by security prodiver, that's why it's empty.
+     * @Route("/login", name="app_login", methods={"POST"})
+     */
     public function login()
     {
     }

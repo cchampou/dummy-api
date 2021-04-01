@@ -92,7 +92,14 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-    public function getGroups()
+    public function promote(): self
+    {
+        $this->roles[] = 'ROLE_ADMIN';
+
+        return $this;
+    }
+
+    public function getGroups(): \Doctrine\Common\Collections\ArrayCollection
     {
       return $this->groups;
     }
